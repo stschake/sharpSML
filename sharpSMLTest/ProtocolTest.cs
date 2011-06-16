@@ -31,7 +31,7 @@ namespace sharpSMLTest
             var res = OpenResource("capture.bin", 8);
             var marshal = new Marshal(res);
             var message = marshal.Read<Message>();
-            Assert.AreEqual(0xdad6, message.CRC16);
+            Assert.AreEqual(0xd6da, message.CRC16);
         }
 
     }

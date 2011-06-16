@@ -64,6 +64,7 @@
     <Compile Include="Protocol\TupleEntry.cs" />
     <Compile Include="Protocol\ValueEntry.cs" />
     <Compile Include="TypeLength.cs" />
+    <Compile Include="Utility\Endianness.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Protocol\PeriodEntry.cs" />

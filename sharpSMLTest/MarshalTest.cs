@@ -61,7 +61,7 @@ namespace sharpSMLTest
         [Test]
         public void TestHandlesOptional()
         {
-            var m = CreateMarshal(0x72, 0x53, 0x01, 0x00, 0x01);
+            var m = CreateMarshal(0x72, 0x53, 0x00, 0x01, 0x01);
             var ret = m.Read<OptionalSequence>();
             Assert.AreEqual(1, ret.Important);
             // default value of type
@@ -81,7 +81,7 @@ namespace sharpSMLTest
         public void TestHandlesOptionalWithNullable()
         {
             {
-                var m = CreateMarshal(0x72, 0x53, 0x01, 0x00, 0x01);
+                var m = CreateMarshal(0x72, 0x53, 0x00, 0x01, 0x01);
                 var ret = m.Read<NullableOptional>();
                 Assert.AreEqual(1, ret.Important);
                 Assert.IsNull(ret.Unnecessary);
@@ -89,7 +89,7 @@ namespace sharpSMLTest
 
             {
                 // test if marshal can correctly _set_ nullables
-                var m = CreateMarshal(0x72, 0x53, 0x01, 0x00, 0x53, 0x01, 0x00);
+                var m = CreateMarshal(0x72, 0x53, 0x00, 0x01, 0x53, 0x00, 0x01);
                 var ret = m.Read<NullableOptional>();
                 Assert.AreEqual(1, ret.Important);
                 Assert.IsTrue(ret.Unnecessary.HasValue);
@@ -107,7 +107,7 @@ namespace sharpSMLTest
         [Test]
         public void TestTreatsNullablesAsOptional()
         {
-            var m = CreateMarshal(0x72, 0x53, 0x01, 0x00, 0x01);
+            var m = CreateMarshal(0x72, 0x53, 0x00, 0x01, 0x01);
             var ret = m.Read<ImplicitOptional>();
             Assert.AreEqual(1, ret.Important);
             Assert.IsNull(ret.Unnecessary);

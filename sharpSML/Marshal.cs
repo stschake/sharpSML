@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using sharpSML.Attributes;
+using sharpSML.Utility;
 
 namespace sharpSML
 {
@@ -65,11 +66,11 @@ namespace sharpSML
                         if (raw.Length == 1)
                             return (sbyte)raw[0];
                         if (raw.Length == 2)
-                            return BitConverter.ToInt16(raw, 0);
+                            return Endianness.Reverse(BitConverter.ToInt16(raw, 0));
                         if (raw.Length == 4)
-                            return BitConverter.ToInt32(raw, 0);
+                            return Endianness.Reverse(BitConverter.ToInt32(raw, 0));
                         if (raw.Length == 8)
-                            return BitConverter.ToInt64(raw, 0);
+                            return Endianness.Reverse(BitConverter.ToInt64(raw, 0));
                         throw new InvalidDataException("Invalid integer, expected 1, 2, 4 or 8 bytes, got " + raw.Length);
                     }
 
@@ -79,11 +80,11 @@ namespace sharpSML
                         if (raw.Length == 1)
                             return raw[0];
                         if (raw.Length == 2)
-                            return BitConverter.ToUInt16(raw, 0);
+                            return Endianness.Reverse(BitConverter.ToUInt16(raw, 0));
                         if (raw.Length == 4)
-                            return BitConverter.ToUInt32(raw, 0);
+                            return Endianness.Reverse(BitConverter.ToUInt32(raw, 0));
                         if (raw.Length == 8)
-                            return BitConverter.ToUInt64(raw, 0);
+                            return Endianness.Reverse(BitConverter.ToUInt64(raw, 0));
                         throw new InvalidDataException("Invalid unsigned, expected 1, 2, 4 or 8 bytes, got " + raw.Length);
                     }
 
