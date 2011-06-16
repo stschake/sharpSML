@@ -47,6 +47,12 @@
     <Compile Include="Attributes\ChoiceCase.cs" />
     <Compile Include="Attributes\Optional.cs" />
     <Compile Include="Attributes\Sequence.cs" />
+    <Compile Include="Protocol\AbortOnError.cs" />
+    <Compile Include="Protocol\Message.cs" />
+    <Compile Include="Protocol\MessageBody.cs" />
+    <Compile Include="Protocol\PublicOpenReq.cs" />
+    <Compile Include="Protocol\PublicOpenRes.cs" />
+    <Compile Include="Protocol\Time.cs" />
     <Compile Include="TypeLength.cs" />
   </ItemGroup>
   <ItemGroup />
