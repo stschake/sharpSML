@@ -216,22 +216,15 @@ namespace sharpSML
         {
             var attributes = type.GetCustomAttributes(false);
 
-            try
-            {
-                var tl = new TypeLength(Source);
-                if (tl.IsOptionalMarker)
-                    return null;
+            var tl = new TypeLength(Source);
+            if (tl.IsOptionalMarker)
+                return null;
 
-                if (attributes.Any(attribute => attribute is Sequence))
-                    return HandleSequence(type, tl);
+            if (attributes.Any(attribute => attribute is Sequence))
+                return HandleSequence(type, tl);
 
-                if (attributes.Any(attribute => attribute is Choice))
-                    return HandleChoice(type, tl);
-            }
-            catch (InvalidDataException inner)
-            {
-                throw new InvalidDataException("Invalid data in stream at offset " + Source.Position, inner);
-            }
+            if (attributes.Any(attribute => attribute is Choice))
+                return HandleChoice(type, tl);
 
             throw new ArgumentException("Type doesn't use any of the SML attributes");
         }

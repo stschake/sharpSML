@@ -49,14 +49,25 @@
     <Compile Include="Attributes\Optional.cs" />
     <Compile Include="Attributes\Sequence.cs" />
     <Compile Include="Protocol\AbortOnError.cs" />
+    <Compile Include="Protocol\GetProfilePackReq.cs" />
+    <Compile Include="Protocol\GetProfilePackRes.cs" />
     <Compile Include="Protocol\Message.cs" />
     <Compile Include="Protocol\MessageBody.cs" />
+    <Compile Include="Protocol\ProcParValue.cs" />
+    <Compile Include="Protocol\ProfObjHeaderEntry.cs" />
+    <Compile Include="Protocol\ProfObjPeriodEntry.cs" />
+    <Compile Include="Protocol\PublicClose.cs" />
     <Compile Include="Protocol\PublicOpenReq.cs" />
     <Compile Include="Protocol\PublicOpenRes.cs" />
     <Compile Include="Protocol\Time.cs" />
+    <Compile Include="Protocol\Tree.cs" />
+    <Compile Include="Protocol\TupleEntry.cs" />
+    <Compile Include="Protocol\ValueEntry.cs" />
     <Compile Include="TypeLength.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Protocol\PeriodEntry.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
