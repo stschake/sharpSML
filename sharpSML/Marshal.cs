@@ -39,6 +39,38 @@ namespace sharpSML
             _reader = new BinaryReader(source);
         }
 
+        private static int NextPow2(int v)
+        {
+            v--;
+            v |= v >> 1;
+            v |= v >> 2;
+            v |= v >> 4;
+            v |= v >> 8;
+            v |= v >> 16;
+            v++;
+            return v;
+        }
+
+        protected byte[] FillPow2(TypeLength tl)
+        {
+            int resLength = NextPow2(tl.Length);
+            if (tl.Length == 1 || tl.Length == resLength)
+                return _reader.ReadBytes(tl.Length);
+
+            var res = new byte[resLength];
+            _reader.ReadBytes(tl.Length).CopyTo(res, resLength - tl.Length);
+
+            /*  the specification is erroneous on this
+                it allows _leading_ all-ones or all-zeros bytes to be omitted
+                since it mandates big-endian, and in signed integers the sign will be in the MSB
+                it can't possibly omit any bytes */
+
+            for (int i = 0; i < (resLength - tl.Length); i++)
+                res[i] = 0x00;
+
+            return res;
+        }
+
         protected object ReadPOD()
         {
             return ReadPOD(false);
@@ -48,8 +80,7 @@ namespace sharpSML
         {
             var tl = new TypeLength(Source);
 
-            // check for empty optional field
-            if (optional && (tl.Type == SMLType.OctetString && tl.Length == 0))
+            if (optional && tl.IsOptionalMarker)
                 return null;
 
             switch (tl.Type)
@@ -62,7 +93,7 @@ namespace sharpSML
 
                 case SMLType.Integer:
                     {
-                        var raw = _reader.ReadBytes(tl.Length);
+                        var raw = FillPow2(tl);
                         if (raw.Length == 1)
                             return (sbyte)raw[0];
                         if (raw.Length == 2)
@@ -76,7 +107,7 @@ namespace sharpSML
 
                 case SMLType.Unsigned:
                     {
-                        var raw = _reader.ReadBytes(tl.Length);
+                        var raw = FillPow2(tl);
                         if (raw.Length == 1)
                             return raw[0];
                         if (raw.Length == 2)
@@ -114,8 +145,11 @@ namespace sharpSML
             // ChangeType doesn't support enums
             if (type.IsEnum)
                 return Enum.ToObject(type, podValue);
-            if (podValue.GetType() != type)
+
+            var podValueType = podValue.GetType();
+            if (podValueType != type && !podValueType.IsSubclassOf(type))
                 return Convert.ChangeType(podValue, type);
+
             return podValue;
         }
 

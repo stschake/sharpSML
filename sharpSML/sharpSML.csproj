@@ -49,8 +49,10 @@
     <Compile Include="Attributes\Optional.cs" />
     <Compile Include="Attributes\Sequence.cs" />
     <Compile Include="Protocol\AbortOnError.cs" />
+    <Compile Include="Protocol\GetListRes.cs" />
     <Compile Include="Protocol\GetProfilePackReq.cs" />
     <Compile Include="Protocol\GetProfilePackRes.cs" />
+    <Compile Include="Protocol\ListEntry.cs" />
     <Compile Include="Protocol\Message.cs" />
     <Compile Include="Protocol\MessageBody.cs" />
     <Compile Include="Protocol\ProcParValue.cs" />

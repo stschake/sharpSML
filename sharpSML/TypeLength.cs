@@ -15,6 +15,7 @@
     along with sharpSML.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.IO;
 
 namespace sharpSML
@@ -41,6 +42,10 @@ namespace sharpSML
 
             var reader = new BinaryReader(source);
             var value = reader.ReadByte();
+
+            if ((value & ExtraByteMask) != 0)
+                throw new NotImplementedException("Found multi-byte TypeLength which is currently not supported");
+
             Type = (SMLType)((value & TypeMask) >> 4);
             // no idea why this oddity is necessary..
             Length = (value & LengthMask) - (Type != SMLType.List ? 1 : 0);

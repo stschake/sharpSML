@@ -22,6 +22,9 @@ namespace sharpSML.Protocol
         public GetProfilePackReq? GetProfilePackReq;
         [ChoiceCase(0x301)]
         public GetProfilePackRes? GetProfilePackRes;
+
+        [ChoiceCase(0x701)]
+        public GetListRes? GetListRes;
     }
 
 }
