@@ -109,6 +109,10 @@ namespace sharpSML
             var podValue = ReadPOD(optional);
             if (podValue == null)
                 return null;
+            
+            // ChangeType doesn't support enums
+            if (type.IsEnum)
+                return Enum.ToObject(type, podValue);
             if (podValue.GetType() != type)
                 return Convert.ChangeType(podValue, type);
             return podValue;
@@ -154,7 +158,7 @@ namespace sharpSML
 
             var fieldCount = tl.Length;
             var fields = type.GetFields();
-            if (fields.Count() != fieldCount)
+            if (fields.Count() > fieldCount)
                 throw new InvalidDataException("Read list with " + fieldCount + " items, expected " + fields.Count());
 
             var ret = Activator.CreateInstance(type);
