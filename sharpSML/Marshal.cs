@@ -120,6 +120,18 @@ namespace sharpSML
 
         protected void FillField(object obj, FieldInfo field)
         {
+            var rawDataAttributes = field.GetCustomAttributes(typeof(RawData), false);
+            if (rawDataAttributes.Length == 1)
+            {
+                var data = (rawDataAttributes[0] as RawData).Data;
+                var dataRead = _reader.ReadBytes(data.Length);
+                if (!data.SequenceEqual(dataRead))
+                    throw new InvalidDataException("RawData attribute data and stream data mismatch");
+                // we don't bother filling the field with anything
+                // RawData fields are only there to facilitate parsing
+                return;
+            }
+
             var isList = field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>);
             if (isList)
             {
@@ -158,7 +170,7 @@ namespace sharpSML
 
             var fieldCount = tl.Length;
             var fields = type.GetFields();
-            if (fields.Count() > fieldCount)
+            if (fields.Count() != fieldCount)
                 throw new InvalidDataException("Read list with " + fieldCount + " items, expected " + fields.Count());
 
             var ret = Activator.CreateInstance(type);

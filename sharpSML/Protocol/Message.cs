@@ -13,6 +13,9 @@ namespace sharpSML.Protocol
         public AbortOnError AbortOnError;
         public MessageBody MessageBody;
         public ushort CRC16;
+
+        [RawData(0x00)]
+        public byte EndOfSmlMessage;
     }
 
 }
